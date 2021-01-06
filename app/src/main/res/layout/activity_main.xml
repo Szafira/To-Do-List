@@ -9,14 +9,17 @@
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <EditText
-        android:laoyut_width="match_parent"
+
+
+        <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_text"
+        android:id="@+id/editText"
         android:hint="Enter text"
         android:padding="12dp"
         android:background="@android:drawable/editbox_background" />
-    <LinearLayout
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -25,24 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/bt_add"
+            android:id="@+id/taskAdd"
             android:text="Add"/>
 
             <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:id="@+id/bt_reset"
+            android:id="@+id/taskReset"
             android:text="Reset"/>
 
-    <LinearLayout/>
+        </LinearLayout>
 
 
-<androidx.recyclerview.widget.RecyclerView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/recycler_view"
-    android:layout_marginTop="8dp"
-    tools:listitem="@layout/list_row_main"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        tools:listitem="@layout/list_main" />
 
-<LinearLayout/>
+</LinearLayout>
