@@ -76,7 +76,7 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
                 EditText editTextDescription = dialog.findViewById(R.id.editTextDescription);
                 EditText editTextTags =dialog.findViewById(R.id.editTextTags);
                 EditText editTextData =dialog.findViewById(R.id.editTextData);
-                Button taskUpdate = dialog.findViewById(R.id.Update);
+                Button addTask = dialog.findViewById(R.id.Submit);
 
                 //Ustawi tekst w okienku update
                 editTextTitle.setText(tasks.title);
@@ -85,7 +85,7 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
                 editTextData.setText(tasks.data);
 
                 //Przycisk Update
-                taskUpdate.setOnClickListener(new View.OnClickListener()
+                addTask.setOnClickListener(new View.OnClickListener()
                 {
                 @Override
                 public void onClick(View v)
@@ -125,6 +125,7 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
 
         }
         });
+
     }
 
     @Override
@@ -144,4 +145,6 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
             taskDelete =itemView.findViewById(R.id.taskDelete);
         }
     }
+
+
 }

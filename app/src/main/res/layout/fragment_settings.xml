@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CFE8E6"
+    android:scrollbarStyle="outsideInset">
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+
+        android:layout_marginTop="142dp"
+        android:layout_marginEnd="-2dp"
+        android:layout_marginBottom="549dp"
+        android:background="@android:drawable/title_bar"
+        android:backgroundTint="#B1BAEC"
+        android:button="@drawable/ic_dark_mode"
+        android:showText="true"
+        android:text="@string/dark_mode"
+        android:thumb="@drawable/switch_thumb"
+        android:track="@drawable/switch_track"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+</RelativeLayout>

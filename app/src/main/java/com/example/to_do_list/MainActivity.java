@@ -9,6 +9,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,33 +36,56 @@ public class MainActivity extends AppCompatActivity {
     mainAdapter adapter;
 
 
+    /*private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener(){
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    Fragment selectedFragment = null;
+
+                    switch (item.getItemId()){
+                        case R.id.nav_home:
+                            selectedFragment = new HomeFragment();
+                            break;
+                        case R.id.nav_settings:
+                            selectedFragment = new SettingsFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            selectedFragment).commit();
+
+                    return true;
+
+                }
+
+            };*/
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        EditText editTextTitle =findViewById(R.id.editTextTitle);
-        EditText editTextDescription =findViewById(R.id.editTextDescription);
-        EditText editTextTags =findViewById(R.id.editTextTags);
-        EditText editTextData =findViewById(R.id.editTextData);
+        EditText editTextTitle = findViewById(R.id.editTextTitle);
+        EditText editTextDescription = findViewById(R.id.editTextDescription);
+        EditText editTextTags = findViewById(R.id.editTextTags);
+        EditText editTextData = findViewById(R.id.editTextData);
 
-        taskAdd =findViewById(R.id.taskAdd);
-        taskReset=findViewById(R.id.taskReset);
-        recyclerView=findViewById(R.id.recycler_view);
+        taskAdd = findViewById(R.id.taskAdd);
+        recyclerView = findViewById(R.id.recycler_view);
 
         database = mainDatabase.getInstance(this);
 
-        tasksList =database.mainDao().getAll();
+        tasksList = database.mainDao().getAll();
         linearLayout = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(linearLayout);
 
-        adapter = new mainAdapter(MainActivity.this,tasksList);
+        adapter = new mainAdapter(MainActivity.this, tasksList);
 
         recyclerView.setAdapter(adapter);
         //onclick dla dodania
-        taskAdd.setOnClickListener(new View.OnClickListener()
-        {
+        taskAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String title = editTextTitle.getText().toString().trim();
@@ -58,47 +93,64 @@ public class MainActivity extends AppCompatActivity {
                 String tags = editTextTags.getText().toString().trim();
                 String data = editTextData.getText().toString().trim();
 
-                    if(!title.equals("")){
-                        defineTasks tasks = new defineTasks();
-                        tasks.setTitle(title);
-                        if(description.equals("")) { tasks.setDescription(""); }
-                        else { tasks.setDescription(description); }
+                if (!title.equals("")) {
+                    defineTasks tasks = new defineTasks();
+                    tasks.setTitle(title);
+                    if (description.equals("")) {
+                        tasks.setDescription("");
+                    } else {
+                        tasks.setDescription(description);
+                    }
 
-                        if(tags.equals("")) { tasks.setTags(""); }
-                        else { tasks.setTags(tags); }
+                    if (tags.equals("")) {
+                        tasks.setTags("");
+                    } else {
+                        tasks.setTags(tags);
+                    }
 
-                        if(data.equals("")) { tasks.setData(""); }
-                        else { tasks.setData(data); }
+                    if (data.equals("")) {
+                        tasks.setData("");
+                    } else {
+                        tasks.setData(data);
+                    }
 
-                            database.mainDao().insert(tasks);
-                            editTextTitle.setText("");
-                            editTextDescription.setText("");
-                            editTextTags.setText("");
-                            editTextData.setText("");
+                    database.mainDao().insert(tasks);
+                    editTextTitle.setText("");
+                    editTextDescription.setText("");
+                    editTextTags.setText("");
+                    editTextData.setText("");
 
-                            tasksList.clear();
-                            tasksList.addAll(database.mainDao().getAll());
-                            adapter.notifyDataSetChanged();
-                            
-                        }
-
-
+                    tasksList.clear();
+                    tasksList.addAll(database.mainDao().getAll());
+                    adapter.notifyDataSetChanged();
 
                 }
-            });
 
-        //onclick dla resetu
-        taskReset.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                database.mainDao().reset(tasksList);
 
-                tasksList.clear();
-                tasksList.addAll(database.mainDao().getAll());
-                adapter.notifyDataSetChanged();
             }
         });
+
+
+        //bottom navigation
+        //BottomNavigationView bottomNavigationView = findViewById(R.id.my_menu);
+       // bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) navListener);
+
+       /* Switch switch1;
+        switch1=findViewById(R.id.switch1);
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                } else {
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+
+        });*/
     }
+
 }
+
+

@@ -29,5 +29,8 @@ public interface mainDao {
     @Query("SELECT * FROM tasksTable")
     List<defineTasks> getAll();
 
+    //@Query("SELECT tags FROM tasksTable")
+    //List<defineTasks> getTags();
+
 
 }
