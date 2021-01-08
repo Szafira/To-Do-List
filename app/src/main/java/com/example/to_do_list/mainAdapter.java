@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
     private Activity context;
     private mainDatabase database;
 
-    //konstruktor \(^.^)/
+    //konstruktor
     public mainAdapter(Activity context,List<defineTasks> tasksList)
     {
         this.context = context;
@@ -50,8 +51,9 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
 
         database = mainDatabase.getInstance(context);
 
-        holder.textView.setText(tasks.title);
-        holder.btEdit.setOnClickListener(new View.OnClickListener() {
+        holder.textViewTitle.setText(tasks.title);
+        holder.textViewDescription.setText(tasks.description);
+        holder.taskEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -69,22 +71,32 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
                 dialog.getWindow().setLayout(width,height);
                 dialog.show();
 
-                EditText editText = dialog.findViewById(R.id.editText);
-                Button btUpdate = dialog.findViewById(R.id.Update);
+                //EditText dla tytułu i opisu
+                EditText editTextTitle = dialog.findViewById(R.id.editTextTitle);
+                EditText editTextDescription = dialog.findViewById(R.id.editTextDescription);
+                EditText editTextTags =dialog.findViewById(R.id.editTextTags);
+                EditText editTextData =dialog.findViewById(R.id.editTextData);
+                Button taskUpdate = dialog.findViewById(R.id.Update);
 
-                    // Nie wyłapuje tego co ma ale nie chce mi się teraz myśleć
-                editText.setText(tasks.title);
+                //Ustawi tekst w okienku update
+                editTextTitle.setText(tasks.title);
+                editTextDescription.setText(tasks.description);
+                editTextTags.setText(tasks.tags);
+                editTextData.setText(tasks.data);
 
-                btUpdate.setOnClickListener(new View.OnClickListener()
+                //Przycisk Update
+                taskUpdate.setOnClickListener(new View.OnClickListener()
                 {
                 @Override
                 public void onClick(View v)
                     {
                         dialog.dismiss();
 
-                        String uText = editText.getText().toString().trim();
-
-                        database.mainDao().update(tID,uText);
+                        String titleText = editTextTitle.getText().toString().trim();
+                        String descriptionText = editTextDescription.getText().toString().trim();
+                        String tagsText = editTextTags.getText().toString().trim();
+                        String dataText = editTextData.getText().toString().trim();
+                        database.mainDao().update(tID, titleText, descriptionText, tagsText, dataText);
 
                         tasksList.clear();
                         tasksList.addAll(database.mainDao().getAll());
@@ -97,7 +109,7 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
              }
         });
 
-        holder.btDelete.setOnClickListener(new View.OnClickListener()
+        holder.taskDelete.setOnClickListener(new View.OnClickListener()
         {
             @Override
                     public void onClick(View v) {
@@ -121,14 +133,15 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
-        ImageView btEdit, btDelete;
+        ImageView taskEdit, taskDelete;
+        TextView textViewTitle, textViewDescription;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView =itemView.findViewById(R.id.textView);
-            btEdit =itemView.findViewById(R.id.bt_edit);
-            btDelete =itemView.findViewById(R.id.bt_delete);
+            textViewTitle =itemView.findViewById(R.id.textViewTitle);
+            textViewDescription =itemView.findViewById(R.id.textViewDescription);
+            taskEdit =itemView.findViewById(R.id.taskEdit);
+            taskDelete =itemView.findViewById(R.id.taskDelete);
         }
     }
 }

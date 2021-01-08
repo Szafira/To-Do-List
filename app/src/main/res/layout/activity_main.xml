@@ -14,9 +14,30 @@
         <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:hint="Enter text"
+        android:id="@+id/editTextTitle"
+        android:hint="Title"
         android:padding="12dp"
+        android:background="@android:drawable/editbox_background" />
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextDescription"
+        android:hint="Description"
+        android:padding="8dp"
+        android:background="@android:drawable/editbox_background" />
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextTags"
+        android:hint="Tags"
+        android:padding="8dp"
+        android:background="@android:drawable/editbox_background" />
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextData"
+        android:hint="Data"
+        android:padding="8dp"
         android:background="@android:drawable/editbox_background" />
 
         <LinearLayout

@@ -10,7 +10,7 @@ import java.util.List;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
-
+//Zapytania do bazy danych
 @Dao
 public interface mainDao {
     @Insert(onConflict = REPLACE)
@@ -22,8 +22,8 @@ public interface mainDao {
     @Delete
     void reset(List<defineTasks> defineTasks);
     //Update taska
-    @Query("UPDATE tasksTable SET title = :sTitle WHERE tid = :tID")
-    void update(int tID, String sTitle);
+    @Query("UPDATE tasksTable SET title = :sTitle, description = :sDescription, tags = :sTag, data = :sData WHERE tid = :tID")
+    void update(int tID, String sTitle, String sDescription, String sTag, String sData);
 
     //Select do listy
     @Query("SELECT * FROM tasksTable")

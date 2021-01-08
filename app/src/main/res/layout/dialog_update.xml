@@ -8,10 +8,33 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:hint="Enter text"
+        android:id="@+id/editTextTitle"
+        android:padding="12dp"
+        android:lines="1"
+        android:gravity="top"
+        android:background="@android:drawable/editbox_background"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextDescription"
         android:padding="12dp"
         android:lines="4"
+        android:gravity="top"
+        android:background="@android:drawable/editbox_background"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextTags"
+        android:padding="12dp"
+        android:lines="2"
+        android:gravity="top"
+        android:background="@android:drawable/editbox_background"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextData"
+        android:padding="12dp"
+        android:lines="1"
         android:gravity="top"
         android:background="@android:drawable/editbox_background"/>
     <Button

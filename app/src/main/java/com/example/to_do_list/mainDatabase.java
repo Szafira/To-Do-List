@@ -5,7 +5,7 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-
+//Utowrzenie/przywołanie bazy danych
 @Database(entities = {defineTasks.class},version=1,exportSchema =false)
 public abstract class mainDatabase extends RoomDatabase {
 
