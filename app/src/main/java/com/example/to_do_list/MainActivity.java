@@ -32,28 +32,24 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager linearLayout;
     mainDatabase database;
     mainAdapter adapter;
-
+    Fragment selectedFragment = null;
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment selectedFragment = null;
+            item -> {
 
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            selectedFragment = new HomeFragment();
-                            break;
-                        case R.id.nav_settings:
-                            selectedFragment = new SettingsFragment();
-                            break;
-                    }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            selectedFragment).commit();
 
-                    return true;
-
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        selectedFragment = new HomeFragment();
+                        break;
+                    case R.id.nav_settings:
+                        selectedFragment = new SettingsFragment();
+                        break;
                 }
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        selectedFragment).commit();
+
+                return true;
 
             };
 
@@ -84,81 +80,67 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         //onclick dla dodania
-        taskAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = editTextTitle.getText().toString().trim();
-                String description = editTextDescription.getText().toString().trim();
-                String tags = editTextTags.getText().toString().trim();
-                String data = editTextData.getText().toString().trim();
+        taskAdd.setOnClickListener(v -> {
+            String title = editTextTitle.getText().toString().trim();
+            String description = editTextDescription.getText().toString().trim();
+            String tags = editTextTags.getText().toString().trim();
+            String data = editTextData.getText().toString().trim();
 
-                if (!title.equals("")) {
-                    defineTasks tasks = new defineTasks();
-                    tasks.setTitle(title);
-                    if (description.equals("")) {
-                        tasks.setDescription("");
-                    } else {
-                        tasks.setDescription(description);
-                    }
-
-                    if (tags.equals("")) {
-                        tasks.setTags("");
-                    } else {
-                        tasks.setTags(tags);
-                    }
-
-                    if (data.equals("")) {
-                        tasks.setData("");
-                    } else {
-                        tasks.setData(data);
-                    }
-
-                    database.mainDao().insert(tasks);
-                    editTextTitle.setText("");
-                    editTextDescription.setText("");
-                    editTextTags.setText("");
-                    editTextData.setText("");
-
-                    tasksList.clear();
-                    tasksList.addAll(database.mainDao().getAll());
-                    adapter.notifyDataSetChanged();
-
+            if (!title.equals("")) {
+                defineTasks tasks = new defineTasks();
+                tasks.setTitle(title);
+                if (description.equals("")) {
+                    tasks.setDescription("");
+                } else {
+                    tasks.setDescription(description);
                 }
 
+                if (tags.equals("")) {
+                    tasks.setTags("");
+                } else {
+                    tasks.setTags(tags);
+                }
+
+                if (data.equals("")) {
+                    tasks.setData("");
+                } else {
+                    tasks.setData(data);
+                }
+
+                database.mainDao().insert(tasks);
+                editTextTitle.setText("");
+                editTextDescription.setText("");
+                editTextTags.setText("");
+                editTextData.setText("");
+
+                tasksList.clear();
+                tasksList.addAll(database.mainDao().getAll());
+                adapter.notifyDataSetChanged();
 
             }
+
+
         });
-        homeClick.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setContentView(R.layout.activity_main);
-            }
-        });
+        homeClick.setOnClickListener(v -> setContentView(R.layout.activity_main));
 
-        settingsClick.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                setContentView(R.layout.fragment_settings);
-                Switch switch1;
-                switch1 = findViewById(R.id.switch1);
-                switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        settingsClick.setOnClickListener(v -> {
+            setContentView(R.layout.fragment_settings);
+            Switch switch1;
+            switch1 = findViewById(R.id.switch1);
+            switch1.setOnCheckedChangeListener((buttonView, isChecked) -> {
 
-                        if (isChecked) {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            switch1.setChecked(true);
+                if (isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    switch1.setChecked(true);
 
-                        } else {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            switch1.setChecked(false);
-                        }
-                    }
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    switch1.setChecked(false);
+                }
+            });
 
-                });
-
-
-            }
 
         });
         //bottom navigation

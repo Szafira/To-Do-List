@@ -61,5 +61,3 @@ public class defineTasks implements Serializable {
     public void setData(String data) { this.data = data; }
 }
 
-//Do dodania: tagi, data
-

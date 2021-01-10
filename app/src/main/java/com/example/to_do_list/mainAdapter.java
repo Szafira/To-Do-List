@@ -53,78 +53,66 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
 
         holder.textViewTitle.setText(tasks.title);
         holder.textViewDescription.setText(tasks.description);
-        holder.taskEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.taskEdit.setOnClickListener(v -> {
 
-                defineTasks data = tasksList.get(holder.getAdapterPosition());
+            defineTasks data = tasksList.get(holder.getAdapterPosition());
 
-                int tID = data.getTid();
+            int tID = data.getTid();
 
-                Dialog dialog = new Dialog(context);
+            Dialog dialog = new Dialog(context);
 
-                dialog.setContentView(R.layout.dialog_update);
+            dialog.setContentView(R.layout.dialog_update);
 
-                int width= WindowManager.LayoutParams.MATCH_PARENT;
+            int width= WindowManager.LayoutParams.MATCH_PARENT;
 
-                int height =WindowManager.LayoutParams.WRAP_CONTENT;
-                dialog.getWindow().setLayout(width,height);
-                dialog.show();
+            int height =WindowManager.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setLayout(width,height);
+            dialog.show();
 
-                //EditText dla tytułu i opisu
-                EditText editTextTitle = dialog.findViewById(R.id.editTextTitle);
-                EditText editTextDescription = dialog.findViewById(R.id.editTextDescription);
-                EditText editTextTags =dialog.findViewById(R.id.editTextTags);
-                EditText editTextData =dialog.findViewById(R.id.editTextData);
-                Button addTask = dialog.findViewById(R.id.Submit);
+            //EditText dla tytułu i opisu
+            EditText editTextTitle = dialog.findViewById(R.id.editTextTitle);
+            EditText editTextDescription = dialog.findViewById(R.id.editTextDescription);
+            EditText editTextTags =dialog.findViewById(R.id.editTextTags);
+            EditText editTextData =dialog.findViewById(R.id.editTextData);
+            Button addTask = dialog.findViewById(R.id.Submit);
 
-                //Ustawi tekst w okienku update
-                editTextTitle.setText(tasks.title);
-                editTextDescription.setText(tasks.description);
-                editTextTags.setText(tasks.tags);
-                editTextData.setText(tasks.data);
+            //Ustawi tekst w okienku update
+            editTextTitle.setText(tasks.title);
+            editTextDescription.setText(tasks.description);
+            editTextTags.setText(tasks.tags);
+            editTextData.setText(tasks.data);
 
-                //Przycisk Update
-                addTask.setOnClickListener(new View.OnClickListener()
-                {
-                @Override
-                public void onClick(View v)
-                    {
-                        dialog.dismiss();
+            //Przycisk Update
+            addTask.setOnClickListener(v1 -> {
+                dialog.dismiss();
 
-                        String titleText = editTextTitle.getText().toString().trim();
-                        String descriptionText = editTextDescription.getText().toString().trim();
-                        String tagsText = editTextTags.getText().toString().trim();
-                        String dataText = editTextData.getText().toString().trim();
-                        database.mainDao().update(tID, titleText, descriptionText, tagsText, dataText);
+                String titleText = editTextTitle.getText().toString().trim();
+                String descriptionText = editTextDescription.getText().toString().trim();
+                String tagsText = editTextTags.getText().toString().trim();
+                String dataText = editTextData.getText().toString().trim();
+                database.mainDao().update(tID, titleText, descriptionText, tagsText, dataText);
 
-                        tasksList.clear();
-                        tasksList.addAll(database.mainDao().getAll());
+                tasksList.clear();
+                tasksList.addAll(database.mainDao().getAll());
 
-                        notifyDataSetChanged();
+                notifyDataSetChanged();
 
 
-                    }
-                    });
-             }
-        });
+            });
+         });
 
-        holder.taskDelete.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-                    public void onClick(View v) {
-                        defineTasks d = tasksList.get(holder.getAdapterPosition());
+        holder.taskDelete.setOnClickListener(v -> {
+                    defineTasks d = tasksList.get(holder.getAdapterPosition());
 
-                        database.mainDao().delete(d);
+                    database.mainDao().delete(d);
 
-                        int position = holder.getAdapterPosition();
-                        tasksList.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position,tasksList.size());
+                    int position1 = holder.getAdapterPosition();
+                    tasksList.remove(position1);
+                    notifyItemRemoved(position1);
+                    notifyItemRangeChanged(position1,tasksList.size());
 
 
-        }
-        });
+    });
 
     }
 
@@ -133,7 +121,7 @@ public class mainAdapter extends RecyclerView.Adapter<mainAdapter.ViewHolder> {
         return tasksList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView taskEdit, taskDelete;
         TextView textViewTitle, textViewDescription;
         public ViewHolder(@NonNull View itemView) {
