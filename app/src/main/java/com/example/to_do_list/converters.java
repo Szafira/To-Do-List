@@ -10,7 +10,7 @@ public class converters {
 
 
     //List<defineTasks> tagsString = database.mainDao().getTags();
-   // String[] tagsArray =tagsString.split(", .;",10);
+   //[] tagsArray =tagsString.Split(", .;",10);
 
 
     //Split daty do skanowania

@@ -1,22 +1,20 @@
 package com.example.to_do_list;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,7 +25,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     //Zmienne
     EditText editText;
-    Button taskAdd,taskReset;
+    Button taskAdd, taskReset;
     RecyclerView recyclerView;
 
     List<defineTasks> tasksList = new ArrayList<>();
@@ -36,13 +34,13 @@ public class MainActivity extends AppCompatActivity {
     mainAdapter adapter;
 
 
-    /*private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener(){
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
 
-                    switch (item.getItemId()){
+                    switch (item.getItemId()) {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
                             break;
@@ -57,8 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-            };*/
-
+            };
 
 
     @Override
@@ -72,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         EditText editTextData = findViewById(R.id.editTextData);
 
         taskAdd = findViewById(R.id.taskAdd);
+        View homeClick = findViewById(R.id.nav_home);
+        View settingsClick = findViewById(R.id.nav_settings);
         recyclerView = findViewById(R.id.recycler_view);
 
         database = mainDatabase.getInstance(this);
@@ -129,28 +128,41 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        homeClick.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setContentView(R.layout.activity_main);
+            }
+        });
+
+        settingsClick.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setContentView(R.layout.fragment_settings);
+                Switch switch1;
+                switch1 = findViewById(R.id.switch1);
+                switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                        if (isChecked) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            switch1.setChecked(true);
+
+                        } else {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            switch1.setChecked(false);
+                        }
+                    }
+
+                });
 
 
-        //bottom navigation
-        //BottomNavigationView bottomNavigationView = findViewById(R.id.my_menu);
-       // bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) navListener);
-
-       /* Switch switch1;
-        switch1=findViewById(R.id.switch1);
-        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
-                } else {
-                    getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                }
             }
 
-        });*/
+        });
+        //bottom navigation
+        BottomNavigationView bottomNavigationView = findViewById(R.id.my_menu);
+        bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) navListener);
     }
-
 }
-
-
